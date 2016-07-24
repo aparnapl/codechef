@@ -1,0 +1,25 @@
+#include<iostream>
+#include<stdio.h>
+using namespace std;
+long long tot(long long n,long long r)
+{
+    long long res=1,i;
+    if(r>n/2)
+        r=n-r;
+    for(i=1;i<=r;++i)
+    {res=res*n;
+    res/=i;
+    n--;
+    }
+    return res;
+}
+int main()
+{int t;
+cin>>t;
+long long n,r;
+  while(t--)
+  {cin>>n>>r;
+    cout<<tot(n-1,r-1 )<<'\n';
+  }
+ 
+}
