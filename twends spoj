@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<limits>
+#include <stdio.h>
+#include<set>
+#include<math.h>
+#include<string.h>
+#define ll long long
+#define SIZE 100003
+using namespace std;
+int a[1002];
+int dp[1002][1002];
+int func( int bottom )
+{int i,j;
+   for(i=0;i<bottom+1;i++)
+    {for(j=0;j<bottom+1;j++)
+       {if( i+1 == j )
+         dp[i][j]=max(a[i],a[j]);
+        if(i==j)
+            dp[i][j]=0;
+       }
+    }
+ 
+        for(i=bottom-2;i>=0;i--)
+         {for(j=i+2;j<=bottom;j++)
+          {int y1=a[i]+((a[i+1]>=a[j])?dp[i+2][j]:dp[i+1][j-1]);
+          int y2=a[j]+((a[j-1]>a[i])?dp[i][j-2]:dp[i+1][j-1]);
+          dp[i][j]=max(y1,y2);
+          }
+         }
+     
+        return dp[0][bottom];
+ 
+}
+int main()
+{int n,i,k=1;
+    while(1)
+    {int s=0;
+        cin>>n;
+        if(n==0)
+            break;
+    for(i=0;i<n;i++)
+        {cin>>a[i];
+        s+=a[i];
+        }
+        
+      int res=func(n-1);
+      
+      cout<<"In game "<<k<<", the greedy strategy might lose by as many as "<<res-(s-res)<<" points."<<'\n';
+      k++;
+    }
+}
